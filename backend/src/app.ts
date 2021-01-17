@@ -3,8 +3,11 @@ import helmet from "helmet";
 import morgan from "morgan";
 import { notFoundHandler, errorHandler } from "./middlewares/middlewares";
 import api from "./api/api";
+import db from "./db";
 
 const app = express();
+
+db();
 
 app.use(express.json());
 app.use(helmet());
