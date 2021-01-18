@@ -1,5 +1,5 @@
 <template>
-  <header class="d-flex align-center pa-3">
+  <header ref="header" class="d-flex align-center pa-3">
     <v-avatar size="36px" class="mr-2">
       <v-img alt="Avatar" :src="avatar" />
     </v-avatar>

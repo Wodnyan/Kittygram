@@ -1,17 +1,32 @@
 <template>
   <div class="home">
-    <post :post="post" />
+    <main class="posts">
+      <post :post="post" />
+      <post :post="post" />
+      <post :post="post" />
+    </main>
+    <div class="suggestions" ref="suggestions">
+      <suggestions />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
 import Post from "@/components/Post/Post.vue";
+import Suggestions from "@/components/Suggestions/Suggestions.vue";
 
 export default Vue.extend({
   name: "Home",
   components: {
     Post,
+    Suggestions,
+  },
+  methods: {
+    setSuggestionsPlace(element: HTMLElement) {
+      const viewportWidth = window.innerWidth;
+      element.style.left = viewportWidth / 2 + 250 + "px";
+    },
   },
   data() {
     return {
@@ -28,6 +43,18 @@ export default Vue.extend({
       },
     };
   },
+  mounted() {
+    const suggestions = this.$refs.suggestions as HTMLElement;
+    this.setSuggestionsPlace(suggestions);
+    window.addEventListener("resize", () =>
+      this.setSuggestionsPlace(suggestions),
+    );
+  },
+  destroyed() {
+    window.removeEventListener("resize", () =>
+      this.setSuggestionsPlace(this.$refs.suggestions as HTMLElement),
+    );
+  },
 });
 </script>
 
@@ -36,5 +63,12 @@ export default Vue.extend({
 .home {
   max-width: $lg;
   margin: 0 auto;
+  display: flex;
+  .posts {
+    flex-basis: $md;
+  }
+  .suggestions {
+    position: fixed;
+  }
 }
 </style>
