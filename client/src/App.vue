@@ -1,7 +1,13 @@
 <template>
-  <div id="app">
-    <router-view />
-  </div>
+  <v-app>
+    <router-view></router-view>
+  </v-app>
 </template>
 
-<style lang="scss"></style>
+<script lang="ts">
+import Vue from "vue";
+
+export default Vue.extend({
+  name: "App",
+});
+</script>
