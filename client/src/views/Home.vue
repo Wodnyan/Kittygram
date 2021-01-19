@@ -1,12 +1,15 @@
 <template>
-  <div class="home">
-    <main class="posts">
-      <post :post="post" />
-      <post :post="post" />
-      <post :post="post" />
-    </main>
-    <div class="suggestions" ref="suggestions">
-      <suggestions />
+  <div>
+    <Nav />
+    <div class="home">
+      <main class="posts">
+        <post :post="post" />
+        <post :post="post" />
+        <post :post="post" />
+      </main>
+      <div class="suggestions" ref="suggestions">
+        <suggestions />
+      </div>
     </div>
   </div>
 </template>
@@ -15,17 +18,19 @@
 import Vue from "vue";
 import Post from "@/components/Post/Post.vue";
 import Suggestions from "@/components/Suggestions/Suggestions.vue";
+import Nav from "@/components/Nav/Nav.vue";
 
 export default Vue.extend({
   name: "Home",
   components: {
     Post,
     Suggestions,
+    Nav,
   },
   methods: {
     setSuggestionsPlace(element: HTMLElement) {
       const viewportWidth = window.innerWidth;
-      element.style.left = viewportWidth / 2 + 250 + "px";
+      element.style.left = viewportWidth / 2 + 120 + "px";
     },
   },
   data() {
@@ -63,12 +68,13 @@ export default Vue.extend({
 @import "@/assets/abstracts/_screen-sizes.scss";
 .home {
   max-width: $lg;
-  margin: 0 auto;
+  margin: 70px auto 0;
   display: flex;
   .posts {
     flex-basis: $md;
   }
   .suggestions {
+    background: red;
     position: fixed;
   }
 }
