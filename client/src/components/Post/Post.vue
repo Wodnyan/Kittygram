@@ -4,7 +4,7 @@
       <post-header :avatar="post.user.avatar" :username="post.user.username" />
       <post-image :image="post.image" />
       <post-interact :isLiked="post.isLiked" />
-      <post-comments />
+      <post-comments :user="post.user" :description="post.description" />
     </v-card>
   </article>
 </template>
