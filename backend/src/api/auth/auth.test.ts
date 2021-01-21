@@ -1,11 +1,6 @@
 import supertest from "supertest";
 import app from "../../app";
-import { respondMessages } from "./auth.routes";
-
-// const testLoginUser = {
-//   username: "foo",
-//   password: "bar",
-// };
+import { respondMessages } from "./auth.controllers";
 
 const testSignUpUser = {
   username: "test",
