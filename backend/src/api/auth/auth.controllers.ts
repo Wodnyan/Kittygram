@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { signUpSchema } from "../../validation-schemas/auth";
 import { isEmailUnique } from "./auth.queries";
 import { encryptPassword } from "../../lib/password-encryption";
-import { createAccessToken } from "../../lib/jwt";
+import { createAccessToken, createRefreshToken } from "../../lib/jwt";
 import User from "./auth.model";
 
 export const respondMessages = {
@@ -33,6 +33,8 @@ export const signUpController = async (
       full_name: validated.fullName,
     });
     const accessToken = await createAccessToken({ userId: user.id });
+    const refreshToken = await createRefreshToken({ userId: user.id });
+    res.cookie("refresh_token", refreshToken);
     res.status(201).json({
       message: respondMessages.successfulSignUp,
       accessToken,
