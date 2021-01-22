@@ -3,6 +3,7 @@ const tableNames = {
   posts: "posts",
   likes: "likes",
   followers: "followers",
+  comments: "comments",
 };
 
 function references(table, name, tableName) {
@@ -39,22 +40,29 @@ exports.up = async function (knex) {
     table.increments();
     references(table, "user_id", tableNames.users);
     references(table, "post_id", tableNames.posts);
+    table.timestamps(false, true);
   });
 
   await knex.schema.createTable(tableNames.comments, (table) => {
     table.increments();
+    table.string("comment", 2000);
     references(table, "user_id", tableNames.users);
     references(table, "post_id", tableNames.posts);
-    table.string("comment", 2000);
+    table.timestamps(false, true);
   });
 
   await knex.schema.createTable(tableNames.followers, (table) => {
     table.increments();
     references(table, "following", tableNames.users);
     references(table, "follower", tableNames.users);
+    table.timestamps(false, true);
   });
 };
 
 exports.down = async function (knex) {
+  await knex.schema.dropTableIfExists(tableNames.comments);
+  await knex.schema.dropTableIfExists(tableNames.likes);
+  await knex.schema.dropTableIfExists(tableNames.followers);
+  await knex.schema.dropTableIfExists(tableNames.posts);
   await knex.schema.dropTableIfExists(tableNames.users);
 };

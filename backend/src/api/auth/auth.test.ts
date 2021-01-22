@@ -1,6 +1,16 @@
 import supertest from "supertest";
 import app from "../../app";
+import { connection } from "../../db";
 import { respondMessages } from "./auth.controllers";
+
+beforeEach(async () => {
+  await connection.migrate.rollback();
+  await connection.migrate.latest();
+});
+
+afterAll(async () => {
+  await connection.destroy();
+});
 
 const testSignUpUser = {
   username: "test",

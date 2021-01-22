@@ -17,3 +17,12 @@ export function createRefreshToken(payload: object) {
     });
   });
 }
+
+export function verifyAccessToken(token: string) {
+  return new Promise((resolve, rejects) => {
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET!, (err, data) => {
+      if (err) return rejects(err);
+      resolve(data);
+    });
+  });
+}
