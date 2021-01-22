@@ -5,6 +5,7 @@ import { notFoundHandler, errorHandler } from "./middlewares/middlewares";
 import api from "./api/api";
 import db from "./db";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use(
     credentials: true,
   })
 );
+app.use(cookieParser());
 app.use(express.json());
 app.use(helmet());
 app.use(morgan("common"));

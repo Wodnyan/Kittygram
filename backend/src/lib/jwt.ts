@@ -2,19 +2,31 @@ import jwt from "jsonwebtoken";
 
 export function createAccessToken(payload: object) {
   return new Promise((resolve, reject) => {
-    jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET!, (error, token) => {
-      if (error) reject(error);
-      resolve(token);
-    });
+    jwt.sign(
+      payload,
+      process.env.ACCESS_TOKEN_SECRET!,
+      { expiresIn: 30 },
+      (error, token) => {
+        if (error) reject(error);
+        resolve(token);
+      }
+    );
   });
 }
 
 export function createRefreshToken(payload: object) {
   return new Promise((resolve, reject) => {
-    jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET!, (error, token) => {
-      if (error) reject(error);
-      resolve(token);
-    });
+    jwt.sign(
+      payload,
+      process.env.ACCESS_TOKEN_SECRET!,
+      {
+        expiresIn: "1d",
+      },
+      (error, token) => {
+        if (error) reject(error);
+        resolve(token);
+      }
+    );
   });
 }
 

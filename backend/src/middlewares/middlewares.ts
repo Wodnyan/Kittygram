@@ -6,19 +6,37 @@ export async function validateAuthorizationTokens(
   res: Response,
   next: NextFunction
 ) {
-  const token = req.headers.authorization;
+  const { authorization } = req.headers;
+  // Token <token>
+  const token = authorization?.split(" ")[1];
   if (!token) {
-    const error = new Error("Authorization header is empty");
+    const error = new Error("Bearer token required");
     res.status(400);
     next(error);
   }
   try {
-    // Check refresh token cookie if it fails because it expired
     const { userId } = (await verifyAccessToken(token!)) as { userId: number };
     req.userId = userId;
     next();
   } catch (error) {
-    next(error);
+    if (error.name === "TokenExpiredError") {
+      const { refresh_token: refreshToken } = req.cookies;
+      verifyAccessToken(refreshToken)
+        .then(({ userId }: any) => {
+          req.userId = userId;
+          next();
+        })
+        .catch((error) => {
+          if (error.name === "TokenExpiredError") {
+            res.status(401);
+            next(error);
+          } else {
+            next(error);
+          }
+        });
+    } else {
+      next(error);
+    }
   }
 }
 
