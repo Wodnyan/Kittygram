@@ -15,6 +15,11 @@ const routes: Array<RouteConfig> = [
     name: "SignUp",
     component: () => import("../views/SignUp.vue"),
   },
+  {
+    path: "/new-post",
+    name: "NewPost",
+    component: () => import("../views/CreateNewPost.vue"),
+  },
 ];
 
 const router = new VueRouter({

@@ -24,6 +24,12 @@
         </v-btn>
       </router-link>
 
+      <router-link to="/new-post">
+        <v-btn icon>
+          <v-icon size="25">mdi-pencil-circle</v-icon>
+        </v-btn>
+      </router-link>
+
       <router-link to="/user">
         <v-btn icon>
           <v-avatar color="secondary" size="25"></v-avatar>
