@@ -1,5 +1,5 @@
 <template>
-  <v-form @submit.prevent="onSubmit">
+  <v-form class="form" @submit.prevent="onSubmit">
     <v-text-field
       :error-messages="showError('username')"
       v-model="username"
@@ -103,3 +103,12 @@ export default Vue.extend({
   },
 });
 </script>
+
+<style lang="scss" scoped>
+@import "../assets/abstracts/screen-sizes";
+.form {
+  max-width: $md;
+  width: 100%;
+  margin: 0 auto;
+}
+</style>
