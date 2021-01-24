@@ -1,15 +1,19 @@
 <template>
-  <v-form class="form" @submit.prevent="onSubmit">
-    <v-text-field label="Description" v-model="description"></v-text-field>
-    <v-file-input v-model="file" chips truncate-length="15"></v-file-input>
-    <v-btn block type="submit">Create new post</v-btn>
-  </v-form>
+  <div class="mt-16">
+    <Nav />
+    <v-form class="form" @submit.prevent="onSubmit">
+      <v-text-field label="Description" v-model="description"></v-text-field>
+      <v-file-input v-model="file" chips truncate-length="15"></v-file-input>
+      <v-btn block type="submit">Create new post</v-btn>
+    </v-form>
+  </div>
 </template>
 
 <script lang="ts">
 /* eslint-disable  @typescript-eslint/no-explicit-any */
 import Vue from "vue";
 import { createPost } from "@/lib/api/posts";
+import Nav from "@/components/Nav/Nav.vue";
 
 export default Vue.extend({
   data() {
@@ -17,6 +21,9 @@ export default Vue.extend({
       description: "",
       file: "",
     };
+  },
+  components: {
+    Nav,
   },
   methods: {
     async onSubmit() {

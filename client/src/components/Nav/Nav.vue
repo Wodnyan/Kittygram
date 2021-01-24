@@ -1,48 +1,58 @@
 <template>
-  <div>
-    <v-app-bar fixed color="deep-purple accent-4" dense dark>
-      <v-toolbar-title>Kittygram</v-toolbar-title>
-      <v-icon>mdi-cat</v-icon>
+  <v-app-bar class="nav" fixed color="deep-purple accent-4" dense dark>
+    <v-toolbar-title>Kittygram</v-toolbar-title>
+    <v-icon>mdi-cat</v-icon>
 
-      <v-spacer></v-spacer>
+    <v-spacer></v-spacer>
 
-      <router-link to="/">
-        <v-btn icon>
-          <v-icon>mdi-home</v-icon>
-        </v-btn>
-      </router-link>
+    <router-link to="/">
+      <v-btn icon>
+        <v-icon>{{ setIcon("/", "mdi-home", "mdi-home-outline") }}</v-icon>
+      </v-btn>
+    </router-link>
 
-      <router-link to="/explore">
-        <v-btn icon>
-          <v-icon>mdi-compass</v-icon>
-        </v-btn>
-      </router-link>
+    <router-link to="/explore">
+      <v-btn icon>
+        <v-icon>{{
+          setIcon("/explore", "mdi-compass", "mdi-compass-outline")
+        }}</v-icon>
+      </v-btn>
+    </router-link>
 
-      <router-link to="/liked">
-        <v-btn icon>
-          <v-icon>mdi-heart</v-icon>
-        </v-btn>
-      </router-link>
+    <router-link to="/liked">
+      <v-btn icon>
+        <v-icon>{{
+          setIcon("/liked", "mdi-heart", "mdi-heart-outline")
+        }}</v-icon>
+      </v-btn>
+    </router-link>
 
-      <router-link to="/new-post">
-        <v-btn icon>
-          <v-icon size="25">mdi-pencil-circle</v-icon>
-        </v-btn>
-      </router-link>
+    <router-link to="/new-post">
+      <v-btn icon>
+        <v-icon size="25">{{
+          setIcon("/new-post", "mdi-pencil-circle", "mdi-pencil-circle-outline")
+        }}</v-icon>
+      </v-btn>
+    </router-link>
 
-      <router-link to="/user">
-        <v-btn icon>
-          <v-avatar color="secondary" size="25"></v-avatar>
-        </v-btn>
-      </router-link>
-    </v-app-bar>
-  </div>
+    <router-link to="/user">
+      <v-btn icon>
+        <v-avatar color="secondary" size="25"></v-avatar>
+      </v-btn>
+    </router-link>
+  </v-app-bar>
 </template>
 
-<script>
+<script lang="ts">
 import Vue from "vue";
 
-export default Vue.extend({});
+export default Vue.extend({
+  methods: {
+    setIcon(path: string, active: string, inActive: string) {
+      return this.$router.currentRoute.path === path ? active : inActive;
+    },
+  },
+});
 </script>
 
 <style lang="scss" scoped></style>
