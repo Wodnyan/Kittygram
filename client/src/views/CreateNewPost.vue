@@ -1,8 +1,8 @@
 <template>
-  <v-form @submit.prevent="onSubmit">
+  <v-form class="form" @submit.prevent="onSubmit">
     <v-text-field label="Description" v-model="description"></v-text-field>
     <v-file-input v-model="file" chips truncate-length="15"></v-file-input>
-    <v-btn type="submit">Create new post</v-btn>
+    <v-btn block type="submit">Create new post</v-btn>
   </v-form>
 </template>
 
@@ -31,4 +31,11 @@ export default Vue.extend({
 });
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+@import "../assets/abstracts/screen-sizes";
+.form {
+  max-width: $md;
+  width: 100%;
+  margin: 0 auto;
+}
+</style>
