@@ -78,4 +78,14 @@ export default Vue.extend({
     position: fixed;
   }
 }
+@media (max-width: $lg) {
+  .home {
+    .posts {
+      margin: 0 auto;
+    }
+    .suggestions {
+      display: none;
+    }
+  }
+}
 </style>
