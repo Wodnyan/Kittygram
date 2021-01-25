@@ -5,6 +5,7 @@ import {
   deletePost,
   getAllPosts,
   getOnePost,
+  likePost,
 } from "./posts.controllers";
 import multer from "multer";
 import path from "path";
@@ -43,6 +44,13 @@ router.post(
   createPost
 );
 
-router.delete("/:postId", deletePost);
+// TODO: Secure this
+router.delete("/:postId", validateAuthorizationTokens, deletePost);
+
+// TODO: Secure this
+router.post("/:postId/like", validateAuthorizationTokens, likePost);
+
+// TODO: Secure this
+//router.post("/:postId/dislike", likePost);
 
 export default router;

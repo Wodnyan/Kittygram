@@ -2,7 +2,9 @@
   <div>
     <Nav />
     <div class="home">
-      <main class="posts"></main>
+      <main class="posts">
+        <post v-for="post in posts" :key="post.id" :post="post" />
+      </main>
       <div class="suggestions" ref="suggestions">
         <suggestions />
       </div>
@@ -12,15 +14,16 @@
 
 <script lang="ts">
 import Vue from "vue";
-// import Post from "@/components/Post/Post.vue";
+import Post from "@/components/Post/Post.vue";
 import Suggestions from "@/components/Suggestions/Suggestions.vue";
 import Nav from "@/components/Nav/Nav.vue";
 import { getUserInfo } from "@/lib/api/users";
+import { fetchAllPosts } from "@/lib/api/posts";
 
 export default Vue.extend({
   name: "Home",
   components: {
-    // Post,
+    Post,
     Suggestions,
     Nav,
   },
@@ -31,7 +34,9 @@ export default Vue.extend({
     },
   },
   data() {
-    return {};
+    return {
+      posts: Array,
+    };
   },
   mounted() {
     const suggestions = this.$refs.suggestions as HTMLElement;
@@ -44,6 +49,8 @@ export default Vue.extend({
     try {
       const user = await getUserInfo();
       this.$store.commit("addUser", user);
+      const posts = await fetchAllPosts();
+      this.posts = posts;
     } catch (error) {
       this.$router.push("sign-up");
     }

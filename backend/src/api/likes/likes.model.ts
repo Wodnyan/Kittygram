@@ -1,29 +1,28 @@
 import { Model } from "objection";
 import path from "path";
 
-export default class Post extends Model {
+export default class Like extends Model {
   id!: number;
   user_id!: number;
-  image!: string;
-  description?: string;
+  post_id!: number;
   created_at!: string;
 
   static get tableName() {
-    return "posts";
+    return "likes";
   }
 
   static relationMappings = {
-    poster: {
+    user: {
       relation: Model.BelongsToOneRelation,
       modelClass: path.join(__dirname, "../auth/auth.model"),
       join: {
-        from: "posts.user_id",
+        from: "likes.user_id",
         to: "users.id",
       },
     },
-    likes: {
-      relation: Model.HasManyRelation,
-      modelClass: path.join(__dirname, "../likes/likes.model"),
+    post: {
+      relation: Model.BelongsToOneRelation,
+      modelClass: path.join(__dirname, "../posts/posts.model"),
       join: {
         from: "likes.post_id",
         to: "posts.id",
