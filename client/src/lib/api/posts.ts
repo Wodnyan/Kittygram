@@ -14,19 +14,17 @@ export const fetchAllPosts = () => {
 };
 
 export const createPost = (file: any, description: string) => {
+  const accessToken = localStorage.getItem("accessToken");
   const formData = new FormData();
   formData.append("image", file);
   formData.append("description", description);
   console.log("post");
-  return new Promise((resolve, reject) => {
-    axios
-      .post(POSTS_ENDPOINT, formData, {
-        withCredentials: true,
-        onUploadProgress: progressEvent => {
-          console.log(progressEvent.loaded / progressEvent.total);
-        },
-      })
-      .then(data => resolve(data))
-      .catch(reject);
-  });
+  return axios
+    .post(POSTS_ENDPOINT, formData, {
+      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    .then(data => data);
 };

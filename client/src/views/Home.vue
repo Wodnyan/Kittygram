@@ -2,11 +2,7 @@
   <div>
     <Nav />
     <div class="home">
-      <main class="posts">
-        <post :post="post" />
-        <post :post="post" />
-        <post :post="post" />
-      </main>
+      <main class="posts"></main>
       <div class="suggestions" ref="suggestions">
         <suggestions />
       </div>
@@ -16,14 +12,15 @@
 
 <script lang="ts">
 import Vue from "vue";
-import Post from "@/components/Post/Post.vue";
+// import Post from "@/components/Post/Post.vue";
 import Suggestions from "@/components/Suggestions/Suggestions.vue";
 import Nav from "@/components/Nav/Nav.vue";
+import { getUserInfo } from "@/lib/api/users";
 
 export default Vue.extend({
   name: "Home",
   components: {
-    Post,
+    // Post,
     Suggestions,
     Nav,
   },
@@ -34,20 +31,7 @@ export default Vue.extend({
     },
   },
   data() {
-    return {
-      post: {
-        image:
-          "https://wompampsupport.azureedge.net/fetchimage?siteId=7575&v=2&jpgQuality=100&width=700&url=https%3A%2F%2Fi.kym-cdn.com%2Fentries%2Ficons%2Ffacebook%2F000%2F026%2F489%2Fcrying.jpg",
-        description: "Sadge cat",
-        id: 1,
-        isLiked: true,
-        user: {
-          username: "foobar",
-          avatar:
-            "https://wompampsupport.azureedge.net/fetchimage?siteId=7576&v=2&jpgQuality=100&width=700&url=https%3A%2F%2Fi.kym-cdn.com%2Fentries%2Ficons%2Ffacebook%2F000%2F026%2F489%2Fcrying.jpg",
-        },
-      },
-    };
+    return {};
   },
   mounted() {
     const suggestions = this.$refs.suggestions as HTMLElement;
@@ -55,6 +39,14 @@ export default Vue.extend({
     window.addEventListener("resize", () =>
       this.setSuggestionsPlace(suggestions),
     );
+  },
+  async created() {
+    try {
+      const user = await getUserInfo();
+      this.$store.commit("addUser", user);
+    } catch (error) {
+      this.$router.push("sign-up");
+    }
   },
   destroyed() {
     window.removeEventListener("resize", () =>

@@ -4,8 +4,15 @@ import Vuex from "vuex";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {},
-  mutations: {},
+  state: {
+    user: null,
+  },
+  mutations: {
+    addUser: (state, user) => {
+      console.log(user);
+      state.user = user;
+    },
+  },
   actions: {},
   modules: {},
 });

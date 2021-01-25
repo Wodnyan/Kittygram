@@ -88,14 +88,12 @@ export default Vue.extend({
         if (errors?.length > 0) {
           this.errors = [...this.errors, ...errors];
         } else {
-          console.log(error.response.data);
           const temp: Error = {
             message,
             context: {
               key: "email",
             },
           };
-          console.log([temp]);
           this.errors = [temp];
         }
       }
