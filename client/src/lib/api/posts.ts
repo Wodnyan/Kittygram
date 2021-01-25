@@ -5,12 +5,7 @@ import { API_ENDPOINT } from "@/constants";
 const POSTS_ENDPOINT = `${API_ENDPOINT}/posts`;
 
 export const fetchAllPosts = () => {
-  return new Promise((resolve, reject) => {
-    axios
-      .get(POSTS_ENDPOINT)
-      .then(({ data }) => resolve(data.posts))
-      .catch(reject);
-  });
+  return axios.get(POSTS_ENDPOINT).then(({ data }) => data.posts);
 };
 
 export const createPost = (file: any, description: string) => {
