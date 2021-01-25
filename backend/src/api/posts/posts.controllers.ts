@@ -28,7 +28,7 @@ export const createPost = async (
   try {
     const postImage: any = await uploadFile(req.file.buffer, req.file.filename);
     const newPost = await Post.query().insertAndFetch({
-      user_id: 1,
+      user_id: req.userId,
       image: postImage.Location,
       description: req.body.description,
     });

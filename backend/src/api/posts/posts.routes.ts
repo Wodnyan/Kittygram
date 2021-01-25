@@ -14,11 +14,11 @@ const upload = multer({
   storage,
   limits: {
     files: 1,
+    // 1 mb
+    fileSize: 1e6,
   },
   fileFilter: (_, file, cb) => {
-    console.log(file);
     if (file.mimetype !== "image/jpeg" && file.mimetype !== "image/png") {
-      console.log("what");
       const error = new Error("File needs to be an image");
       return cb(error);
     }
