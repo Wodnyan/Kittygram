@@ -11,4 +11,15 @@ afterAll(async () => {
   await connection.destroy();
 });
 
+const testPost = {
+  description: "This is a test post",
+};
 
+const ENDPOINT = "/api/v1/posts/";
+
+describe(`POST ${ENDPOINT}`, () => {
+  it("should respond with 201 and the created post", async () => {
+    const response = await supertest(app).post(ENDPOINT);
+    expect(response.body.post.description).toBe(testPost.description);
+  });
+});

@@ -1,6 +1,11 @@
 import { Router } from "express";
-//import { validateAuthorizationTokens } from "../../middlewares/middlewares";
-import { createPost, getAllPosts } from "./posts.controllers";
+import { validateAuthorizationTokens } from "../../middlewares/middlewares";
+import {
+  createPost,
+  deletePost,
+  getAllPosts,
+  getOnePost,
+} from "./posts.controllers";
 import multer from "multer";
 import path from "path";
 
@@ -29,6 +34,15 @@ const router = Router();
 
 router.get("/", getAllPosts);
 
-router.post("/", upload.single("image"), createPost);
+router.get("/:postId", getOnePost);
+
+router.post(
+  "/",
+  validateAuthorizationTokens,
+  upload.single("image"),
+  createPost
+);
+
+router.delete("/:postId", deletePost);
 
 export default router;

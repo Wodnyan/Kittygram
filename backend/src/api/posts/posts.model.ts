@@ -1,4 +1,5 @@
 import { Model } from "objection";
+import path from "path";
 
 export default class Post extends Model {
   id!: number;
@@ -11,18 +12,14 @@ export default class Post extends Model {
     return "posts";
   }
 
-  static relationMappings() {
-    const User = require("../auth/auth.model");
-
-    return {
-      poster: {
-        relation: Model.BelongsToOneRelation,
-        modelClass: User,
-        join: {
-          from: "posts.user_id",
-          to: "users.id",
-        },
+  static relationMappings = {
+    poster: {
+      relation: Model.BelongsToOneRelation,
+      modelClass: path.join(__dirname, "../auth/auth.model"),
+      join: {
+        from: "posts.user_id",
+        to: "users.id",
       },
-    };
-  }
+    },
+  };
 }
