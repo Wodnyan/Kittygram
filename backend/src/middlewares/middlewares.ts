@@ -56,6 +56,12 @@ export function errorHandler(
   res: Response,
   _1: NextFunction
 ) {
+  if (error.isJoi) {
+    const validationError: any = new Error("Validation error");
+    validationError.errors = error.details;
+    error = validationError;
+    res.status(400);
+  }
   const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
   res.status(statusCode);
   res.json({
