@@ -14,9 +14,9 @@ export const getAllPosts = async (
   next: NextFunction
 ) => {
   try {
-    const { userId } = req.query;
+    const { userId, skip, limit } = req.query;
     await allPostsQueryParams.validateAsync(
-      { userId },
+      { userId, skip, limit },
       {
         abortEarly: false,
       }
@@ -30,7 +30,9 @@ export const getAllPosts = async (
         "poster.username as poster",
         "poster.email as posterEmail",
         "poster.id as posterId",
-      ]);
+      ])
+      .offset(Number(skip))
+      .limit(Number(limit));
     const likes = await Like.query()
       .where({ user_id: Number(userId) || undefined })
       .skipUndefined();
