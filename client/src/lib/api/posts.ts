@@ -4,8 +4,10 @@ import { API_ENDPOINT } from "@/constants";
 
 const POSTS_ENDPOINT = `${API_ENDPOINT}/posts`;
 
-export const fetchAllPosts = () => {
-  return axios.get(POSTS_ENDPOINT).then(({ data }) => data.posts);
+export const fetchAllPosts = (userId?: number) => {
+  return axios
+    .get(`${POSTS_ENDPOINT}?userId=${userId}`)
+    .then(({ data }) => data.posts);
 };
 
 export const createPost = (file: any, description: string) => {

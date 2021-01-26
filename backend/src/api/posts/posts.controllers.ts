@@ -14,9 +14,9 @@ export const getAllPosts = async (
   next: NextFunction
 ) => {
   try {
-    const { userId } = req.query;
+    const { userId, skip, limit } = req.query;
     await allPostsQueryParams.validateAsync(
-      { userId },
+      { userId, skip, limit },
       {
         abortEarly: false,
       }
@@ -30,7 +30,9 @@ export const getAllPosts = async (
         "poster.username as poster",
         "poster.email as posterEmail",
         "poster.id as posterId",
-      ]);
+      ])
+      .offset(Number(skip))
+      .limit(Number(limit));
     const likes = await Like.query()
       .where({ user_id: Number(userId) || undefined })
       .skipUndefined();
@@ -59,6 +61,27 @@ export const likePost = async (
     });
     res.status(201).json({
       like,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const dislikePost = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { postId } = req.params;
+    await Like.query()
+      .where({
+        post_id: postId,
+        user_id: req.userId,
+      })
+      .del();
+    res.status(204).json({
+      message: "Deleted",
     });
   } catch (error) {
     next(error);

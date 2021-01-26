@@ -3,7 +3,7 @@
     <v-card>
       <post-header :avatar="post.user.avatar" :username="post.user.username" />
       <post-image :image="post.image" />
-      <post-interact :isLiked="post.isLiked" />
+      <post-interact :postId="post.id" :isLiked="post.liked" />
       <post-comments :user="post.user" :description="post.description" />
       <post-comment-form />
     </v-card>

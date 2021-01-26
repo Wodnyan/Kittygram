@@ -49,7 +49,7 @@ export default Vue.extend({
     try {
       const user = await getUserInfo();
       this.$store.commit("addUser", user);
-      const posts = await fetchAllPosts();
+      const posts = await fetchAllPosts(user.id);
       this.posts = posts;
     } catch (error) {
       this.$router.push("sign-up");

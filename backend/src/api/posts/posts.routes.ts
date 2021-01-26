@@ -3,6 +3,7 @@ import { validateAuthorizationTokens } from "../../middlewares/middlewares";
 import {
   createPost,
   deletePost,
+  dislikePost,
   getAllPosts,
   getOnePost,
   likePost,
@@ -44,13 +45,10 @@ router.post(
   createPost
 );
 
-// TODO: Secure this
 router.delete("/:postId", validateAuthorizationTokens, deletePost);
 
-// TODO: Secure this
 router.post("/:postId/like", validateAuthorizationTokens, likePost);
 
-// TODO: Secure this
-//router.post("/:postId/dislike", likePost);
+router.delete("/:postId/dislike", validateAuthorizationTokens, dislikePost);
 
 export default router;
