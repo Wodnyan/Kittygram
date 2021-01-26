@@ -67,6 +67,25 @@ export const likePost = async (
   }
 };
 
+export const dislikePost = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { postId } = req.params;
+    await Like.query()
+      .where({
+        post_id: postId,
+        user_id: req.userId,
+      })
+      .del();
+    res.status(204);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const createPost = async (
   req: Request,
   res: Response,
