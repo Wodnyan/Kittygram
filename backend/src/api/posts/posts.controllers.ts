@@ -4,17 +4,25 @@ import dotenv from "dotenv";
 import { uploadFile } from "../../lib/uploadFile";
 import Like from "../likes/likes.model";
 import FormatedPost from "../../lib/formated-post";
+import { allPostsQueryParams } from "../../validation-schemas/posts";
 
 dotenv.config();
 
 export const getAllPosts = async (
-  _: Request,
+  req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
+    const { userId } = req.query;
+    await allPostsQueryParams.validateAsync(
+      { userId },
+      {
+        abortEarly: false,
+      }
+    );
     const posts = await Post.query()
-      .joinRelated("poster")
+      .leftJoinRelated("poster")
       .select([
         "posts.id as id",
         "posts.description as description",
@@ -23,8 +31,12 @@ export const getAllPosts = async (
         "poster.email as posterEmail",
         "poster.id as posterId",
       ]);
+    const likes = await Like.query()
+      .where({ user_id: Number(userId) || undefined })
+      .skipUndefined();
     const formatedPosts = posts.map((post: any) => {
-      return new FormatedPost(post);
+      const isLiked = likes?.some((like) => like.post_id === post.id);
+      return new FormatedPost({ ...post, liked: isLiked });
     });
     res.json({
       posts: formatedPosts,
@@ -40,9 +52,9 @@ export const likePost = async (
   next: NextFunction
 ) => {
   try {
-    const { postId } = req.body;
+    const { postId } = req.params;
     const like = await Like.query().insert({
-      post_id: postId,
+      post_id: Number(postId),
       user_id: req.userId,
     });
     res.status(201).json({
@@ -69,7 +81,6 @@ export const createPost = async (
       newPost,
     });
   } catch (error) {
-    console.log(error);
     next(error);
   }
 };
