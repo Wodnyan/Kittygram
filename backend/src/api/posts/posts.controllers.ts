@@ -80,7 +80,9 @@ export const dislikePost = async (
         user_id: req.userId,
       })
       .del();
-    res.status(204);
+    res.status(204).json({
+      message: "Deleted",
+    });
   } catch (error) {
     next(error);
   }
