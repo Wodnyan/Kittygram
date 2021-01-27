@@ -3,13 +3,12 @@ import { validateAuthorizationTokens } from "../../middlewares/middlewares";
 import {
   createPost,
   deletePost,
-  dislikePost,
   getAllPosts,
   getOnePost,
-  likePost,
 } from "./posts.controllers";
 import multer from "multer";
 import path from "path";
+import { likePost, dislikePost } from "../likes/likes.controllers";
 
 const storage = multer.memoryStorage();
 const upload = multer({
