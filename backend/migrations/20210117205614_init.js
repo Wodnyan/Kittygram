@@ -16,6 +16,9 @@ function references(table, name, tableName) {
     .notNullable();
 }
 
+const defaultAvatarUrl =
+  "https://icon-library.com/images/default-user-icon/default-user-icon-4.jpg";
+
 exports.up = async function (knex) {
   await knex.schema.createTable(tableNames.users, (table) => {
     table.increments();
@@ -23,7 +26,7 @@ exports.up = async function (knex) {
     table.string("full_name", 200).notNullable();
     table.string("password", 200);
     table.string("email", 320).unique().notNullable();
-    table.string("avatar_url", 2083);
+    table.string("avatar", 2083).defaultTo(defaultAvatarUrl);
     table.string("description", 2000);
     table.timestamps(false, true);
   });
