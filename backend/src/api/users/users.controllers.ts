@@ -5,7 +5,33 @@ import User from "../auth/auth.model";
 import Like from "../likes/likes.model";
 import Post from "../posts/posts.model";
 
-export const getUserInfo = async (
+export const getOneUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { userId } = req.params;
+    const user = await User.query()
+      .findById(userId)
+      .select([
+        "email",
+        "username",
+        "full_name as fullName",
+        "id",
+        "avatar",
+        "description",
+        "created_at as createdAt",
+      ]);
+    res.json({
+      user,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const checkUserCredentials = async (
   req: Request,
   res: Response,
   next: NextFunction

@@ -1,10 +1,16 @@
 import { Router } from "express";
 import { validateAuthorizationTokens } from "../../middlewares/middlewares";
-import { getUserInfo, getPostsOfUser } from "./users.controllers";
+import {
+  checkUserCredentials,
+  getPostsOfUser,
+  getOneUser,
+} from "./users.controllers";
 
 const router = Router();
 
-router.get("/user", validateAuthorizationTokens, getUserInfo);
+router.get("/check", validateAuthorizationTokens, checkUserCredentials);
+
+router.get("/:userId", getOneUser);
 
 router.get("/:userId/posts", getPostsOfUser);
 

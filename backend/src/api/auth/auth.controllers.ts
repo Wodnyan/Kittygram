@@ -34,10 +34,12 @@ export const signUpController = async (
     });
     const accessToken = await createAccessToken({ userId: user.id });
     const refreshToken = await createRefreshToken({ userId: user.id });
-    res.cookie("refresh_token", refreshToken);
+    res.cookie("refresh_token", refreshToken, {
+      httpOnly: true,
+    });
+    res.cookie("access_token", accessToken);
     res.status(201).json({
       message: respondMessages.successfulSignUp,
-      accessToken,
       user: {
         id: user.id,
         username: user.username,
@@ -65,7 +67,11 @@ export const googleOAuthController = async (
   try {
     const { user } = req as any;
     const refreshToken = await createRefreshToken({ userId: user.id });
-    res.cookie("refresh_token", refreshToken);
+    const accessToken = await createAccessToken({ userId: user.id });
+    res.cookie("refresh_token", refreshToken, {
+      httpOnly: true,
+    });
+    res.cookie("access_token", accessToken);
     res.redirect("http://localhost:8080/");
   } catch (error) {
     next(error);
