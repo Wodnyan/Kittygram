@@ -27,7 +27,7 @@
 
     <v-btn :to="userRoute()" icon>
       <v-avatar color="secondary" size="25">
-      <v-img alt="Avatar" :src="$store.state.user.avatar" />
+        <v-img transition="false" alt="Avatar" :src="avatar" />
       </v-avatar>
     </v-btn>
   </v-app-bar>
@@ -38,6 +38,11 @@ import Vue from "vue";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 export default Vue.extend({
+  data() {
+    return {
+      avatar: this.$store.state.user.avatar,
+    };
+  },
   methods: {
     setIcon(path: string, active: string, inActive: string) {
       return this.$router.currentRoute.path === path ? active : inActive;
@@ -48,5 +53,3 @@ export default Vue.extend({
   },
 });
 </script>
-
-<style lang="scss" scoped></style>
