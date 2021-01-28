@@ -56,3 +56,18 @@ export const signUpController = async (
     next(error);
   }
 };
+
+export const googleOAuthController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { user } = req as any;
+    const refreshToken = await createRefreshToken({ userId: user.id });
+    res.cookie("refresh_token", refreshToken);
+    res.redirect("http://localhost:8080/");
+  } catch (error) {
+    next(error);
+  }
+};
