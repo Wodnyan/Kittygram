@@ -1,39 +1,45 @@
 <template>
-  <v-form class="form" @submit.prevent="onSubmit">
-    <v-text-field
-      :error-messages="showError('username')"
-      v-model="username"
-      label="Username"
-      required
-    ></v-text-field>
-    <v-text-field
-      :error-messages="showError('fullName')"
-      v-model="fullName"
-      label="Full Name"
-      required
-    ></v-text-field>
-    <v-text-field
-      :error-messages="showError('email')"
-      v-model="email"
-      label="Email"
-      required
-    ></v-text-field>
-    <v-text-field
-      label="Password"
-      :append-icon="displayPassword ? 'mdi-eye-off' : 'mdi-eye'"
-      @click:append="displayPassword = !displayPassword"
-      required
-      v-model="password"
-      :error-messages="showError('password')"
-      :type="displayPassword ? 'text' : 'password'"
-    ></v-text-field>
-    <div class="d-flex align-center">
-      <div>
-        <router-link to="/login">Create an account</router-link>
+  <div class="container">
+    <v-btn left block href="http://localhost:5050/api/v1/auth/oauth/google">
+      <v-icon color="red">mdi-google</v-icon>
+      Sign in with Google
+    </v-btn>
+    <v-form @submit.prevent="onSubmit">
+      <v-text-field
+        :error-messages="showError('username')"
+        v-model="username"
+        label="Username"
+        required
+      ></v-text-field>
+      <v-text-field
+        :error-messages="showError('fullName')"
+        v-model="fullName"
+        label="Full Name"
+        required
+      ></v-text-field>
+      <v-text-field
+        :error-messages="showError('email')"
+        v-model="email"
+        label="Email"
+        required
+      ></v-text-field>
+      <v-text-field
+        label="Password"
+        :append-icon="displayPassword ? 'mdi-eye-off' : 'mdi-eye'"
+        @click:append="displayPassword = !displayPassword"
+        required
+        v-model="password"
+        :error-messages="showError('password')"
+        :type="displayPassword ? 'text' : 'password'"
+      ></v-text-field>
+      <div class="d-flex align-center">
+        <div>
+          <router-link to="/login">Create an account</router-link>
+        </div>
+        <v-btn class="ml-auto" color="primary" type="submit">Sign Up</v-btn>
       </div>
-      <v-btn class="ml-auto" color="primary" type="submit">Sign Up</v-btn>
-    </div>
-  </v-form>
+    </v-form>
+  </div>
 </template>
 
 <script lang="ts">
@@ -104,7 +110,7 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 @import "../assets/abstracts/screen-sizes";
-.form {
+.container {
   max-width: $md;
   width: 100%;
   margin: 0 auto;
