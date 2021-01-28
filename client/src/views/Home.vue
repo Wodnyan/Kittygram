@@ -17,7 +17,7 @@ import Vue from "vue";
 import Post from "@/components/Post/Post.vue";
 import Suggestions from "@/components/Suggestions/Suggestions.vue";
 import Nav from "@/components/Nav/Nav.vue";
-import { getUserInfo } from "@/lib/api/users";
+import { checkUserCredentials } from "@/lib/api/users";
 import { fetchAllPosts } from "@/lib/api/posts";
 
 export default Vue.extend({
@@ -47,12 +47,12 @@ export default Vue.extend({
   },
   async created() {
     try {
-      const user = await getUserInfo();
+      const user = await checkUserCredentials();
       this.$store.commit("addUser", user);
       const posts = await fetchAllPosts(user.id);
       this.posts = posts;
     } catch (error) {
-      this.$router.push("sign-up");
+      this.$router.push("/sign-up");
     }
   },
   destroyed() {
