@@ -2,6 +2,7 @@
   <div>
     <Nav />
     <user-info :user="user" />
+    <v-img v-for="post in posts" :key="post.id" :src="post.image"></v-img>
   </div>
 </template>
 
@@ -25,7 +26,7 @@ export default Vue.extend({
     Nav,
     UserInfo,
   },
-  async created() {
+  async mounted() {
     try {
       const { id } = this.$route.params;
       const creds = await checkUserCredentials();
@@ -34,8 +35,12 @@ export default Vue.extend({
       this.user = userInfo;
       const posts: any = await fetchAllUsersPosts(Number(id));
       this.posts = posts;
-    } catch (error) {
-      this.$router.push("/sign-up");
+    } catch ({ response }) {
+      if (response.status === 401) {
+        this.$router.push("/sign-up");
+      } else {
+        console.log(response);
+      }
     }
   },
 });
