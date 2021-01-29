@@ -2,7 +2,12 @@
   <div>
     <Nav />
     <user-info :user="user" />
-    <v-img v-for="post in posts" :key="post.id" :src="post.image"></v-img>
+    <v-row no-gutters class="post-grid">
+      <v-col v-for="post in posts" :key="post.id" cols="4">
+        <v-img :src="post.image"></v-img>
+      </v-col>
+    </v-row>
+    <!-- <v-img v-for="post in posts" :key="post.id" :src="post.image"></v-img> -->
   </div>
 </template>
 
@@ -45,3 +50,12 @@ export default Vue.extend({
   },
 });
 </script>
+
+<style lang="scss" scoped>
+@import "../assets/abstracts/screen-sizes";
+
+.post-grid {
+  margin: 1rem auto 0;
+  max-width: $lg;
+}
+</style>
