@@ -19,7 +19,11 @@ export async function validateAuthorizationTokens(
     req.userId = userId;
     next();
   } catch (error) {
-    if (error.name === "TokenExpiredError") {
+    console.log(error.name);
+    if (
+      error.name === "TokenExpiredError" ||
+      error.name === "JsonWebTokenError"
+    ) {
       const { refresh_token: refreshToken } = req.cookies;
       verifyAccessToken(refreshToken)
         .then(({ userId }: any) => {
@@ -27,7 +31,10 @@ export async function validateAuthorizationTokens(
           next();
         })
         .catch((error) => {
-          if (error.name === "TokenExpiredError") {
+          if (
+            error.name === "TokenExpiredError" ||
+            error.name === "JsonWebTokenError"
+          ) {
             res.status(401);
             next(error);
           } else {
@@ -35,6 +42,7 @@ export async function validateAuthorizationTokens(
           }
         });
     } else {
+      console.log("here");
       next(error);
     }
   }
