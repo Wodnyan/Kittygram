@@ -7,7 +7,6 @@
         <v-img :src="post.image"></v-img>
       </v-col>
     </v-row>
-    <!-- <v-img v-for="post in posts" :key="post.id" :src="post.image"></v-img> -->
   </div>
 </template>
 
