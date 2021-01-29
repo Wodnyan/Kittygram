@@ -25,9 +25,13 @@
       }}</v-icon>
     </v-btn>
 
-    <v-btn :to="userRoute()" icon>
+    <v-btn :to="`/user/${$store.state.user.id}`" icon>
       <v-avatar color="secondary" size="25">
-        <v-img transition="false" alt="Avatar" :src="avatar" />
+        <v-img
+          transition="false"
+          alt="Avatar"
+          :src="$store.state.user.avatar"
+        />
       </v-avatar>
     </v-btn>
   </v-app-bar>
@@ -38,11 +42,6 @@ import Vue from "vue";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 export default Vue.extend({
-  data() {
-    return {
-      avatar: this.$store.state.user.avatar,
-    };
-  },
   methods: {
     setIcon(path: string, active: string, inActive: string) {
       return this.$router.currentRoute.path === path ? active : inActive;
