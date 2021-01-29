@@ -34,5 +34,5 @@ export const fetchAllUsersPosts = (userId: number) => {
         userId,
       },
     })
-    .then(data => data);
+    .then(({ data }) => data.posts);
 };

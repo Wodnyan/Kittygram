@@ -5,7 +5,6 @@ import User from "./api/auth/auth.model";
 
 dotenv.config();
 
-
 export default function passportConfig(passport: PassportStatic) {
   passport.use(
     new GoogleStrategy(
@@ -23,11 +22,13 @@ export default function passportConfig(passport: PassportStatic) {
             return done(null, userExists);
           }
           const user = await User.query().insertAndFetch({
-            username: profile.displayName,
-            email: profile.emails[0].value,
-            full_name: `${profile.name.familyName} ${profile.name.givenName}`,
+            avatar: profile._json.picture,
+            username: profile._json.name,
+            email: profile._json.email,
+            full_name: `${profile._json.family_name || ""} ${
+              profile._json.given_name || ""
+            }`,
           });
-          console.log(user);
           done(null, user);
         } catch (error) {
           done(error);
