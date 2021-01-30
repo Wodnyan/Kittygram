@@ -7,28 +7,10 @@
     <div class="comments">
       <button class="text--disabled">View all 100 comments</button>
       <post-comment
-        comment="This a very sadge cat"
-        commenter="Commenter2"
-      ></post-comment>
-      <post-comment
-        comment="This command will make changes to your project template files, components folder, vue.config.js, etc. If you are installing Vuetify via Vue-CLI, make sure you commit your code to avoid any potential data loss. Template changes can be skipped by selecting the advanced install option during install."
-        commenter="Commenter2"
-      ></post-comment>
-      <post-comment
-        comment="This command will make changes to your project template files, components folder, vue.config.js, etc. If you are installing Vuetify via Vue-CLI, make sure you commit your code to avoid any potential data loss. Template changes can be skipped by selecting the advanced install option during install."
-        commenter="Commenter2"
-      ></post-comment>
-      <post-comment
-        comment="This command will make changes to your project template files, components folder, vue.config.js, etc. If you are installing Vuetify via Vue-CLI, make sure you commit your code to avoid any potential data loss. Template changes can be skipped by selecting the advanced install option during install."
-        commenter="Commenter2"
-      ></post-comment>
-      <post-comment
-        comment="This command will make changes to your project template files, components folder, vue.config.js, etc. If you are installing Vuetify via Vue-CLI, make sure you commit your code to avoid any potential data loss. Template changes can be skipped by selecting the advanced install option during install."
-        commenter="Commenter2"
-      ></post-comment>
-      <post-comment
-        comment="This command will make changes to your project template files, components folder, vue.config.js, etc. If you are installing Vuetify via Vue-CLI, make sure you commit your code to avoid any potential data loss. Template changes can be skipped by selecting the advanced install option during install."
-        commenter="Commenter2"
+        :comment="comment.comment"
+        :commenter="comment.username"
+        v-for="comment in temp"
+        :key="comment.id"
       ></post-comment>
     </div>
   </section>
@@ -42,9 +24,16 @@ export default Vue.extend({
   props: {
     user: Object,
     description: String,
+    comments: Array,
+    full: Boolean,
   },
   components: {
     PostComment,
+  },
+  computed: {
+    temp() {
+      return this.full ? this.comments : this.comments.slice(0, 3);
+    },
   },
 });
 </script>
