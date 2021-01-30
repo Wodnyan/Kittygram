@@ -7,7 +7,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     user: null,
-    posts: [] as Post[],
+    posts: [] as Post[] | [],
   },
   mutations: {
     addUser: (state, user) => {
@@ -18,6 +18,14 @@ export default new Vuex.Store({
     },
     setPosts: (state, posts) => {
       state.posts = posts;
+    },
+    togglePostLike: (state, postId: number) => {
+      return (state.posts = (state.posts as Post[]).map(post => {
+        if (postId === post.id) {
+          post.liked = !post.liked;
+        }
+        return post;
+      }));
     },
   },
   actions: {},

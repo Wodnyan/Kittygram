@@ -1,7 +1,7 @@
 <template>
   <section>
     <v-btn @click="onClick" class="mx-2" fab dark small color="pink">
-      <v-icon v-if="liked" dark>
+      <v-icon v-if="isLiked" dark>
         mdi-heart
       </v-icon>
       <v-icon v-else>
@@ -25,28 +25,23 @@ export default Vue.extend({
     isLiked: Boolean,
     postId: Number,
   },
-  data() {
-    return {
-      liked: this.isLiked,
-    };
-  },
   methods: {
     like() {
       like(this.postId)
         .then(() => {
-          this.liked = true;
+          this.$store.commit("togglePostLike", this.postId);
         })
         .catch(error => console.log(error.response));
     },
     dislike() {
       dislike(this.postId)
         .then(() => {
-          this.liked = false;
+          this.$store.commit("togglePostLike", this.postId);
         })
         .catch(error => console.log(error));
     },
     onClick() {
-      return this.liked ? this.dislike() : this.like();
+      return this.isLiked ? this.dislike() : this.like();
     },
   },
 });
