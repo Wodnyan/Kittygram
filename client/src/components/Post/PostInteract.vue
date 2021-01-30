@@ -39,7 +39,6 @@ export default Vue.extend({
         .catch(error => console.log(error.response));
     },
     dislike() {
-      console.log("what");
       dislike(this.postId)
         .then(() => {
           this.liked = false;

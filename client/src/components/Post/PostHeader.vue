@@ -11,7 +11,7 @@
       elevation="1"
       class="ml-auto transparent"
     >
-      <v-icon dark>mdi-dots-horizontal</v-icon>
+      <v-icon color="black">mdi-dots-horizontal</v-icon>
     </v-btn>
     <v-overlay :value="overlay">
       <v-card class="mx-auto">
