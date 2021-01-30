@@ -1,6 +1,7 @@
 <template>
   <section>
-    <img :src="image" width="100%" />
+    <!--<img :src="image" width="100%" />-->
+    <v-img :src="image" class="blue"></v-img>
   </section>
 </template>
 

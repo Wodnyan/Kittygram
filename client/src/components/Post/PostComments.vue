@@ -14,6 +14,22 @@
         comment="This command will make changes to your project template files, components folder, vue.config.js, etc. If you are installing Vuetify via Vue-CLI, make sure you commit your code to avoid any potential data loss. Template changes can be skipped by selecting the advanced install option during install."
         commenter="Commenter2"
       ></post-comment>
+      <post-comment
+        comment="This command will make changes to your project template files, components folder, vue.config.js, etc. If you are installing Vuetify via Vue-CLI, make sure you commit your code to avoid any potential data loss. Template changes can be skipped by selecting the advanced install option during install."
+        commenter="Commenter2"
+      ></post-comment>
+      <post-comment
+        comment="This command will make changes to your project template files, components folder, vue.config.js, etc. If you are installing Vuetify via Vue-CLI, make sure you commit your code to avoid any potential data loss. Template changes can be skipped by selecting the advanced install option during install."
+        commenter="Commenter2"
+      ></post-comment>
+      <post-comment
+        comment="This command will make changes to your project template files, components folder, vue.config.js, etc. If you are installing Vuetify via Vue-CLI, make sure you commit your code to avoid any potential data loss. Template changes can be skipped by selecting the advanced install option during install."
+        commenter="Commenter2"
+      ></post-comment>
+      <post-comment
+        comment="This command will make changes to your project template files, components folder, vue.config.js, etc. If you are installing Vuetify via Vue-CLI, make sure you commit your code to avoid any potential data loss. Template changes can be skipped by selecting the advanced install option during install."
+        commenter="Commenter2"
+      ></post-comment>
     </div>
   </section>
 </template>
