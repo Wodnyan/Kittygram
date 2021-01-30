@@ -1,10 +1,19 @@
 import { Router } from "express";
-import { signUpController, googleOAuthController } from "./auth.controllers";
+import {
+  signUpController,
+  googleOAuthController,
+  checkUsername,
+  checkEmail,
+} from "./auth.controllers";
 import passport from "passport";
 
 const router = Router();
 
 router.post("/sign-up", signUpController);
+
+router.post("/check/username", checkUsername);
+
+router.post("/check/email", checkEmail);
 
 router.get(
   "/oauth/google",

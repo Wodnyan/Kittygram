@@ -22,7 +22,7 @@ const defaultAvatarUrl =
 exports.up = async function (knex) {
   await knex.schema.createTable(tableNames.users, (table) => {
     table.increments();
-    table.string("username", 30).notNullable();
+    table.string("username", 30).notNullable().unique();
     table.string("full_name", 200).notNullable();
     table.string("password", 200);
     table.string("email", 320).unique().notNullable();
