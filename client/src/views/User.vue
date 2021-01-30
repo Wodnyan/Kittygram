@@ -4,7 +4,7 @@
     <user-info :user="user" />
     <v-row no-gutters class="post-grid">
       <v-col v-for="post in posts" :key="post.id" cols="4">
-        <v-img :src="post.image"></v-img>
+        <post :onlyImage="true" :post="post" />
       </v-col>
     </v-row>
   </div>
@@ -18,6 +18,7 @@ import { checkUserCredentials, getUserInfo } from "@/lib/api/users";
 import Nav from "@/components/Nav/Nav.vue";
 import { User } from "@/types/user";
 import UserInfo from "@/components/UserInfo.vue";
+import Post from "@/components/Post/Post.vue";
 
 export default Vue.extend({
   data() {
@@ -29,6 +30,7 @@ export default Vue.extend({
   components: {
     Nav,
     UserInfo,
+    Post,
   },
   async mounted() {
     try {

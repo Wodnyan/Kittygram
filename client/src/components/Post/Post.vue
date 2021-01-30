@@ -1,6 +1,11 @@
 <template>
   <article>
-    <v-card>
+    <post-image
+      v-if="onlyImage"
+      @click.native="toggleOverlay"
+      :image="post.image"
+    />
+    <v-card v-else>
       <post-header :avatar="post.user.avatar" :username="post.user.username" />
       <post-image @click.native="toggleOverlay" :image="post.image" />
       <post-interact :postId="post.id" :isLiked="post.liked" />
@@ -11,10 +16,10 @@
         :full="false"
       />
       <post-comment-form />
-      <v-overlay v-if="showPostOverlay">
-        <post-full :post="post" :closeOverlay="toggleOverlay" />
-      </v-overlay>
     </v-card>
+    <v-overlay v-if="showPostOverlay">
+      <post-full :post="post" :closeOverlay="toggleOverlay" />
+    </v-overlay>
   </article>
 </template>
 
@@ -38,6 +43,7 @@ export default Vue.extend({
   },
   props: {
     post: Object,
+    onlyImage: Boolean,
   },
   data() {
     return {
