@@ -3,7 +3,7 @@
     <Nav />
     <div class="home">
       <main class="posts">
-        <post v-for="post in posts" :key="post.id" :post="post" />
+        <post v-for="post in $store.state.posts" :key="post.id" :post="post" />
       </main>
       <div class="suggestions" ref="suggestions">
         <suggestions />
@@ -33,11 +33,6 @@ export default Vue.extend({
       element.style.left = viewportWidth / 2 + 120 + "px";
     },
   },
-  data() {
-    return {
-      posts: Array,
-    };
-  },
   mounted() {
     const suggestions = this.$refs.suggestions as HTMLElement;
     this.setSuggestionsPlace(suggestions);
@@ -50,9 +45,13 @@ export default Vue.extend({
       const user = await checkUserCredentials();
       this.$store.commit("addUser", user);
       const posts = await fetchAllPosts(user.id);
-      this.posts = posts;
+      this.$store.commit("setPosts", posts);
     } catch (error) {
-      this.$router.push("/sign-up");
+      if (error.response.status === 401) {
+        this.$router.push("/sign-up");
+      } else {
+        console.log(error);
+      }
     }
   },
   destroyed() {
