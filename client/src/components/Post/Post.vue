@@ -7,7 +7,7 @@
       <post-comments :user="post.user" :description="post.description" />
       <post-comment-form />
       <v-overlay v-if="showPostOverlay">
-        <post-overlay :post="post" :closeOverlay="toggleOverlay" />
+        <post-full :post="post" :closeOverlay="toggleOverlay" />
       </v-overlay>
     </v-card>
   </article>
@@ -20,7 +20,7 @@ import PostComments from "./PostComments.vue";
 import PostInteract from "./PostInteract.vue";
 import PostImage from "./PostImage.vue";
 import PostCommentForm from "./PostCommentForm.vue";
-import PostOverlay from "./PostOverlay.vue";
+import PostFull from "./PostFull.vue";
 
 export default Vue.extend({
   components: {
@@ -29,7 +29,7 @@ export default Vue.extend({
     PostInteract,
     PostImage,
     PostCommentForm,
-    PostOverlay,
+    PostFull,
   },
   props: {
     post: Object,
