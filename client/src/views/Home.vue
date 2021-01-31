@@ -30,7 +30,7 @@ export default Vue.extend({
   methods: {
     setSuggestionsPlace(element: HTMLElement) {
       const viewportWidth = window.innerWidth;
-      element.style.left = viewportWidth / 2 + 120 + "px";
+      element.style.left = viewportWidth / 2 + 160 + "px";
     },
   },
   mounted() {
