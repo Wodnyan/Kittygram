@@ -5,7 +5,7 @@ import getCookieValue from "../get-cookie-value";
 
 const ENDPOINT = `${API_ENDPOINT}/users`;
 
-export const checkUserCredentials = async (): Promise<User> => {
+export const checkUserCredentials = (): Promise<User> => {
   const accessToken = getCookieValue("access_token");
   return axios
     .get(`${ENDPOINT}/check`, {
