@@ -11,3 +11,11 @@ export const signUpSchema = Joi.object({
   fullName: Joi.string().trim().max(200).required(),
   email: Joi.string().email().required().max(320),
 });
+
+export const checkEmailSchema = Joi.object({
+  email: Joi.string().email().required().max(320),
+})
+
+export const checkUsernameSchema = Joi.object({
+  username: Joi.string().trim().max(30).required(),
+})

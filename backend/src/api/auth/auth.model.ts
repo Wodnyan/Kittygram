@@ -13,4 +13,18 @@ export default class User extends Model {
   static get tableName() {
     return "users";
   }
+
+  static async isEmailAvailable(email: string) {
+    const user = await this.query().findOne({
+      email,
+    });
+    return user === undefined;
+  }
+
+  static async isUsernameAvailable(username: string) {
+    const user = await this.query().findOne({
+      username,
+    });
+    return user === undefined;
+  }
 }

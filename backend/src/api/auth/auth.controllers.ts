@@ -1,5 +1,9 @@
 import { Request, Response, NextFunction } from "express";
-import { signUpSchema } from "../../validation-schemas/auth";
+import {
+  checkEmailSchema,
+  checkUsernameSchema,
+  signUpSchema,
+} from "../../validation-schemas/auth";
 import { isEmailUnique } from "./auth.queries";
 import { encryptPassword } from "../../lib/password-encryption";
 import { createAccessToken, createRefreshToken } from "../../lib/jwt";
@@ -73,6 +77,52 @@ export const googleOAuthController = async (
     });
     res.cookie("access_token", accessToken);
     res.redirect("http://localhost:8080/");
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const checkUsername = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { username } = req.body;
+    await checkUsernameSchema.validateAsync({ username });
+    const isUsernameAvailable = await User.isUsernameAvailable(username);
+    if (isUsernameAvailable) {
+      res.json({
+        username,
+      });
+    } else {
+      res.status(409).json({
+        message: "Username is taken",
+      });
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const checkEmail = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { email } = req.body;
+    await checkEmailSchema.validateAsync({ email });
+    const isEmailAvailable = await User.isEmailAvailable(email);
+    if (isEmailAvailable) {
+      res.json({
+        email,
+      });
+    } else {
+      res.status(409).json({
+        message: "Email is taken",
+      });
+    }
   } catch (error) {
     next(error);
   }
