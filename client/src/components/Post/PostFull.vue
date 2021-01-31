@@ -1,22 +1,28 @@
 <template>
-  <div class="post">
-    <v-icon class="foo" size="50px" @click="closeOverlay">mdi-close</v-icon>
-    <div class="post__image">
-      <post-image :image="post.image" />
-    </div>
-    <div class="temp">
-      <post-header :avatar="post.user.avatar" :username="post.user.username" />
-      <div class="comment-overflow">
-        <post-comments :user="post.user" :description="post.description" />
-      </div>
-      <div class="bottom">
-        <div class="interact">
-          <post-interact :postId="post.id" :isLiked="post.liked" />
+  <v-container class="foo">
+    <v-icon class="close" size="50px" @click="closeOverlay">mdi-close</v-icon>
+    <v-row no-gutters>
+      <v-col sm="12" lg="8">
+        <post-image :image="post.image" />
+      </v-col>
+      <v-col class="post-info">
+        <post-header
+          :avatar="post.user.avatar"
+          :username="post.user.username"
+        />
+        <div class="overflow">
+          <post-comments
+            :comments="comments"
+            :full="true"
+            :user="post.user"
+            :description="post.description"
+          />
         </div>
+        <post-interact :postId="post.id" :isLiked="post.liked" />
         <post-comment-form />
-      </div>
-    </div>
-  </div>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script lang="ts">
@@ -38,47 +44,26 @@ export default Vue.extend({
   props: {
     closeOverlay: Function,
     post: Object,
+    comments: Array,
   },
 });
 </script>
 
 <style lang="scss" scoped>
-.post {
+.foo {
   max-width: 900px;
-  width: 100vw;
-  display: flex;
+}
+.post-info {
   color: black;
-  &__image {
-    background: white;
-    display: block;
-    height: 100%;
-    width: 100%;
+  background: white;
+  .overflow {
+    height: 400px;
+    overflow-y: auto;
   }
-  .temp {
-    background: white;
-    width: 50%;
-    display: flex;
-    height: 550px;
-    flex-direction: column;
-    .comment-overflow {
-      overflow: auto;
-      max-height: 400px;
-      padding: 1rem;
-    }
-    .bottom {
-      .interact {
-        $border: 1px solid black;
-        border-top: $border;
-        border-bottom: $border;
-        padding: 8px 0px;
-      }
-      margin-top: auto;
-    }
-  }
-  .foo {
-    position: fixed;
-    top: 0;
-    right: 0;
-  }
+}
+.close {
+  position: fixed;
+  top: 0;
+  right: 0;
 }
 </style>
