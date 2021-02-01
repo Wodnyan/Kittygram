@@ -2,6 +2,7 @@ interface Poster {
   id: number;
   username: string;
   email: string;
+  avatar?: string;
 }
 
 interface Post {
@@ -12,6 +13,7 @@ interface Post {
   poster: string;
   posterEmail: string;
   liked?: boolean;
+  posterAvatar?: string;
 }
 
 export default class FormatedPost {
@@ -29,6 +31,7 @@ export default class FormatedPost {
     poster,
     posterEmail,
     liked,
+    posterAvatar,
   }: Post) {
     this.id = id;
     this.description = description;
@@ -38,6 +41,7 @@ export default class FormatedPost {
       id: posterId,
       email: posterEmail,
       username: poster,
+      avatar: posterAvatar,
     };
   }
 }

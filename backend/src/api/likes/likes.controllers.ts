@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import Like from "./likes.model";
+import { likeDislikeSchema } from "../../validation-schemas/likes";
 
 export const likePost = async (
   req: Request,
@@ -8,6 +9,7 @@ export const likePost = async (
 ) => {
   try {
     const { postId } = req.params;
+    await likeDislikeSchema.validateAsync({ postId });
     const like = await Like.query().insert({
       post_id: Number(postId),
       user_id: req.userId,
@@ -27,6 +29,7 @@ export const dislikePost = async (
 ) => {
   try {
     const { postId } = req.params;
+    await likeDislikeSchema.validateAsync({ postId });
     await Like.query()
       .where({
         post_id: postId,

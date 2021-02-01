@@ -30,6 +30,7 @@ export const getAllPosts = async (
         "poster.username as poster",
         "poster.email as posterEmail",
         "poster.id as posterId",
+        "poster.avatar as posterAvatar",
       ])
       .offset(Number(skip))
       .limit(Number(limit));
@@ -85,6 +86,7 @@ export const getOnePost = async (
         "poster.username as poster",
         "poster.email as posterEmail",
         "poster.id as posterId",
+        "poster.avatar as posterAvatar",
       ]);
     if (!post) {
       const error = new Error("Couldn't find post");

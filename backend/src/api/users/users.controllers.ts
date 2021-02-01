@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import FormatedPost from "../../lib/formated-post";
 import { allPostsQueryParams } from "../../validation-schemas/posts";
+import { getOneUserSchema } from "../../validation-schemas/users";
 import User from "../auth/auth.model";
 import Like from "../likes/likes.model";
 import Post from "../posts/posts.model";
@@ -12,6 +13,7 @@ export const getOneUser = async (
 ) => {
   try {
     const { userId } = req.params;
+    await getOneUserSchema.validateAsync({ userId });
     const user = await User.query()
       .findById(userId)
       .select([
