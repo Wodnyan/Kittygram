@@ -9,6 +9,10 @@ import {
 import multer from "multer";
 import path from "path";
 import { likePost, dislikePost } from "../likes/likes.controllers";
+import {
+  postComment,
+  getAllCommentsPost,
+} from "../comments/comments.controllers";
 
 const storage = multer.memoryStorage();
 const upload = multer({
@@ -47,6 +51,10 @@ router.post(
 router.delete("/:postId", validateAuthorizationTokens, deletePost);
 
 router.post("/:postId/like", validateAuthorizationTokens, likePost);
+
+router.post("/:postId/comment", validateAuthorizationTokens, postComment);
+
+router.get("/:postId/comments", getAllCommentsPost);
 
 router.delete("/:postId/dislike", validateAuthorizationTokens, dislikePost);
 
