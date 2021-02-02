@@ -29,5 +29,13 @@ export default class Post extends Model {
         to: "posts.id",
       },
     },
+    comments: {
+      relation: Model.HasManyRelation,
+      modelClass: path.join(__dirname, "../comments/comments.model"),
+      join: {
+        from: "comments.post_id",
+        to: "posts.id",
+      },
+    },
   };
 }

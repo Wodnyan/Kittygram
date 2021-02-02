@@ -5,13 +5,14 @@ interface Poster {
   avatar?: string;
 }
 
-interface Post {
+interface Constructor {
   id: number;
   description: string;
   image: string;
   posterId: number;
   poster: string;
   posterEmail: string;
+  numberOfLikes: number;
   liked?: boolean;
   posterAvatar?: string;
 }
@@ -20,8 +21,9 @@ export default class FormatedPost {
   id!: number;
   description!: string;
   image!: string;
-  liked?: boolean;
+  numberOfLikes!: number;
   user!: Poster;
+  liked?: boolean;
 
   constructor({
     id,
@@ -32,11 +34,13 @@ export default class FormatedPost {
     posterEmail,
     liked,
     posterAvatar,
-  }: Post) {
+    numberOfLikes,
+  }: Constructor) {
     this.id = id;
     this.description = description;
     this.image = image;
     this.liked = liked;
+    this.numberOfLikes = numberOfLikes;
     this.user = {
       id: posterId,
       email: posterEmail,

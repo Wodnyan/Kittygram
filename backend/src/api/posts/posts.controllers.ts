@@ -23,15 +23,18 @@ export const getAllPosts = async (
     );
     const posts = await Post.query()
       .leftJoinRelated("poster")
-      .select([
-        "posts.id as id",
-        "posts.description as description",
-        "image",
-        "poster.username as poster",
-        "poster.email as posterEmail",
-        "poster.id as posterId",
-        "poster.avatar as posterAvatar",
-      ])
+      .select(
+        [
+          "posts.id as id",
+          "posts.description as description",
+          "image",
+          "poster.username as poster",
+          "poster.email as posterEmail",
+          "poster.id as posterId",
+          "poster.avatar as posterAvatar",
+        ],
+        Post.relatedQuery("likes").count().as("numberOfLikes")
+      )
       .offset(Number(skip))
       .limit(Number(limit));
     const likes = await Like.query()
