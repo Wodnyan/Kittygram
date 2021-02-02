@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { postCommentSchema } from "../../validation-schemas/comments";
 import Comment from "./comments.model";
+import FormatedComment from "../../lib/formated-comment";
 
 export const getAllComments = async (
   _: Request,
@@ -8,9 +9,22 @@ export const getAllComments = async (
   next: NextFunction
 ) => {
   try {
-    const comments = await Comment.query();
+    const comments = await Comment.query()
+      .leftJoinRelated("commenter")
+      .select([
+        "comments.id as id",
+        "comments.comment as comment",
+        "commenter.username as username",
+        "commenter.email as email",
+        "commenter.avatar as avatar",
+        "comments.created_at as createdAt",
+        "commenter.id as commenterId",
+      ]);
+    const formatedComments = comments.map(
+      (comment: any) => new FormatedComment(comment)
+    );
     res.json({
-      comments,
+      comments: formatedComments,
     });
   } catch (error) {
     next(error);
@@ -50,11 +64,25 @@ export const getAllCommentsPost = async (
 ) => {
   const { postId } = req.params;
   try {
-    const comments = await Comment.query().where({
-      postId,
-    });
+    const comments = await Comment.query()
+      .where({
+        post_id: postId,
+      })
+      .leftJoinRelated("commenter")
+      .select([
+        "comments.id as id",
+        "comments.comment as comment",
+        "commenter.username as username",
+        "commenter.email as email",
+        "commenter.avatar as avatar",
+        "comments.created_at as createdAt",
+        "commenter.id as commenterId",
+      ]);
+    const formatedComments = comments.map(
+      (comment: any) => new FormatedComment(comment)
+    );
     res.json({
-      comments,
+      comments: formatedComments,
     });
   } catch (error) {
     next(error);

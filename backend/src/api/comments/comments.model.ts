@@ -15,17 +15,17 @@ export default class Comment extends Model {
   static relationMappings = {
     post: {
       relation: Model.BelongsToOneRelation,
-      modelClass: path.join(__dirname, "../auth/auth.model"),
+      modelClass: path.join(__dirname, "../post/post.model"),
       join: {
-        from: "comments.user_id",
+        from: "comments.post_id",
         to: "posts.id",
       },
     },
     commenter: {
       relation: Model.BelongsToOneRelation,
-      modelClass: path.join(__dirname, "../likes/likes.model"),
+      modelClass: path.join(__dirname, "../auth/auth.model"),
       join: {
-        from: "comments.post_id",
+        from: "comments.user_id",
         to: "users.id",
       },
     },
