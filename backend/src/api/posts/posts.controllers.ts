@@ -14,29 +14,75 @@ export const getAllPosts = async (
   next: NextFunction
 ) => {
   try {
-    const { userId, skip, limit } = req.query;
+    const { userId, skip, limit, showComments } = req.query;
     await allPostsQueryParams.validateAsync(
-      { userId, skip, limit },
+      { userId, skip, limit, showComments },
       {
         abortEarly: false,
       }
     );
-    const posts = await Post.query()
-      .leftJoinRelated("poster")
-      .select(
-        [
-          "posts.id as id",
-          "posts.description as description",
-          "image",
-          "poster.username as poster",
-          "poster.email as posterEmail",
-          "poster.id as posterId",
-          "poster.avatar as posterAvatar",
-        ],
-        Post.relatedQuery("likes").count().as("numberOfLikes")
-      )
-      .offset(Number(skip))
-      .limit(Number(limit));
+    let posts: any;
+    if (showComments === "all") {
+      posts = await Post.query()
+        .leftJoinRelated("poster")
+        .withGraphJoined(
+          "comments(selectNecessary).[commenter(selectNonCredentials)]",
+          {
+            joinOperation: "leftJoin",
+          }
+        )
+        .modifiers({
+          selectNonCredentials(builder) {
+            builder.select("username", "id", "avatar", "email");
+          },
+          selectNecessary(builder) {
+            builder.select("id", "comment", "created_at as createdAt");
+          },
+        })
+        .select(
+          [
+            "posts.id as id",
+            "posts.description as description",
+            "image",
+            "poster.username as poster",
+            "poster.email as posterEmail",
+            "poster.id as posterId",
+            "poster.avatar as posterAvatar",
+          ],
+          Post.relatedQuery("likes").count().as("numberOfLikes")
+        )
+        .groupBy(
+          "posts.id",
+          "poster.id",
+          "comments.id",
+          "comments.comment",
+          "comments.createdAt",
+          "comments:commenter.username",
+          "comments:commenter.id",
+          "comments:commenter.avatar",
+          "comments:commenter.email"
+        )
+        .offset(Number(skip))
+        .limit(Number(limit));
+    } else {
+      posts = await Post.query()
+        .leftJoinRelated("poster")
+        .select(
+          [
+            "posts.id as id",
+            "posts.description as description",
+            "image",
+            "poster.username as poster",
+            "poster.email as posterEmail",
+            "poster.id as posterId",
+            "poster.avatar as posterAvatar",
+          ],
+          Post.relatedQuery("likes").count().as("numberOfLikes")
+        )
+        .groupBy("posts.id", "poster.id")
+        .offset(Number(skip))
+        .limit(Number(limit));
+    }
     const likes = await Like.query()
       .where({ user_id: Number(userId) || undefined })
       .skipUndefined();

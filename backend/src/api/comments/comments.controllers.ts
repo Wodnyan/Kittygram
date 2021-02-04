@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { postCommentSchema } from "../../validation-schemas/comments";
 import Comment from "./comments.model";
-import FormatedComment from "../../lib/formated-comment";
 
 export const getAllComments = async (
   _: Request,
@@ -20,11 +19,8 @@ export const getAllComments = async (
         "comments.created_at as createdAt",
         "commenter.id as commenterId",
       ]);
-    const formatedComments = comments.map(
-      (comment: any) => new FormatedComment(comment)
-    );
     res.json({
-      comments: formatedComments,
+      comments,
     });
   } catch (error) {
     next(error);
@@ -78,11 +74,8 @@ export const getAllCommentsPost = async (
         "comments.created_at as createdAt",
         "commenter.id as commenterId",
       ]);
-    const formatedComments = comments.map(
-      (comment: any) => new FormatedComment(comment)
-    );
     res.json({
-      comments: formatedComments,
+      comments,
     });
   } catch (error) {
     next(error);
