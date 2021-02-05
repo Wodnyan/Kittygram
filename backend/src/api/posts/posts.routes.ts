@@ -52,7 +52,7 @@ router.delete("/:postId", validateAuthorizationTokens, deletePost);
 
 router.post("/:postId/like", validateAuthorizationTokens, likePost);
 
-router.post("/:postId/comment", validateAuthorizationTokens, postComment);
+router.post("/:postId/comments", validateAuthorizationTokens, postComment);
 
 router.get("/:postId/comments", getAllCommentsPost);
 
