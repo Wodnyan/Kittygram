@@ -1,5 +1,5 @@
 import { NextFunction, Response, Request } from "express";
-import { verifyAccessToken } from "../lib/jwt";
+import { verifyAccessToken, createAccessToken } from "../lib/jwt";
 
 export async function validateAuthorizationTokens(
   req: Request,
@@ -19,7 +19,6 @@ export async function validateAuthorizationTokens(
     req.userId = userId;
     next();
   } catch (error) {
-    console.log(error.name);
     if (
       error.name === "TokenExpiredError" ||
       error.name === "JsonWebTokenError"
@@ -28,7 +27,10 @@ export async function validateAuthorizationTokens(
       verifyAccessToken(refreshToken)
         .then(({ userId }: any) => {
           req.userId = userId;
-          next();
+          createAccessToken({ userId }).then((value) => {
+            res.cookie("access_token", value);
+            next();
+          });
         })
         .catch((error) => {
           if (
@@ -42,7 +44,6 @@ export async function validateAuthorizationTokens(
           }
         });
     } else {
-      console.log("here");
       next(error);
     }
   }
