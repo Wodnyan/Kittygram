@@ -2,7 +2,7 @@
   <v-container class="container">
     <v-icon class="close" size="50px" @click="closeOverlay">mdi-close</v-icon>
     <v-row no-gutters>
-      <v-col class="post-image" sm="12" lg="8">
+      <v-col class="post-image" lg="8">
         <post-image :image="post.image" />
       </v-col>
       <v-col class="post-info">
@@ -19,7 +19,7 @@
           />
         </div>
         <post-interact :postId="post.id" :isLiked="post.liked" />
-        <post-comment-form />
+        <post-comment-form :postId="post.id" />
       </v-col>
     </v-row>
   </v-container>
@@ -67,9 +67,9 @@ export default Vue.extend({
   top: 0;
   right: 0;
 }
-@media(max-width: $xl) {
-  .post-image {
-    display: none !important;
+@media (max-width: $xl) {
+  .container .post-image {
+    display: none;
   }
 }
 </style>
