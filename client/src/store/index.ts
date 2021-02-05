@@ -27,6 +27,14 @@ export default new Vuex.Store({
         return post;
       }));
     },
+    addComment: (state, comment) => {
+      state.posts = (state.posts as Post[]).map((post) => {
+        if (comment.postId === post.id) {
+          post.comments = [comment, ...post.comments];
+        }
+        return post;
+      });
+    },
   },
   actions: {},
   modules: {},

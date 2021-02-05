@@ -39,7 +39,7 @@ export default Vue.extend({
     },
   },
   props: {
-    commenter: String,
+    commenter: Object,
     comment: String,
   },
 });

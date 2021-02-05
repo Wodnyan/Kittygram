@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { postCommentSchema } from "../../validation-schemas/comments";
+import User from "../auth/auth.model";
 import Comment from "./comments.model";
 
 export const getAllComments = async (
@@ -44,9 +45,24 @@ export const postComment = async (
       post_id: validated.postId,
       user_id: req.userId,
     });
+    const commentPoster = await User.query()
+      .where({
+        id: newComment.user_id,
+      })
+      .first();
     res.json({
-      message: "Hello world",
-      comment: newComment,
+      comment: {
+        id: newComment.id,
+        comment: newComment.comment,
+        createdAt: newComment.created_at,
+        postId: newComment.post_id,
+        commenter: {
+          username: commentPoster.username,
+          id: commentPoster.id,
+          avatar: commentPoster.avatar,
+          email: commentPoster.email,
+        },
+      },
     });
   } catch (error) {
     next(error);

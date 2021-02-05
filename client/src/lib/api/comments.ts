@@ -8,7 +8,7 @@ const COMMENTS_ENDPOINT = `${API_ENDPOINT}/comments`;
 export const postComment = async (comment: string, postId: number) => {
   const accessToken = getCookieValue("access_token");
   const {
-    data: { post },
+    data: { comment: newComment },
   } = await axios.post(
     `${POSTS_ENDPOINT}/${postId}/comments`,
     {
@@ -22,5 +22,5 @@ export const postComment = async (comment: string, postId: number) => {
     },
   );
 
-  return post;
+  return newComment;
 };
