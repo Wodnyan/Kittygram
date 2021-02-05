@@ -32,9 +32,9 @@ export default Vue.extend({
     async onSubmit() {
       if (this.isInputEmpty) return;
       try {
-        console.log(this.postId);
-        const post = await postComment(this.comment, Number(this.postId));
-        console.log(post);
+        const comment = await postComment(this.comment, Number(this.postId));
+        this.$store.commit("addComment", comment);
+        console.log(comment);
         this.comment = "";
       } catch (error) {
         console.log(error.response);

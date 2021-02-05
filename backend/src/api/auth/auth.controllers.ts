@@ -28,6 +28,12 @@ export const signUpController = async (
       res.status(409);
       throw error;
     }
+    const uniqueUsername = await User.isUsernameAvailable(validated.username);
+    if (!uniqueUsername) {
+      const error = new Error("Username is in use");
+      res.status(409);
+      throw error;
+    }
     const hashedPassword = await encryptPassword(validated.password);
     const user = await User.query().insertAndFetch({
       username: validated.username,

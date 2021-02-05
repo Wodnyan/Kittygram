@@ -20,12 +20,20 @@ export default new Vuex.Store({
       state.posts = posts;
     },
     togglePostLike: (state, postId: number) => {
-      return (state.posts = (state.posts as Post[]).map(post => {
+      return (state.posts = (state.posts as Post[]).map((post) => {
         if (postId === post.id) {
           post.liked = !post.liked;
         }
         return post;
       }));
+    },
+    addComment: (state, comment) => {
+      state.posts = (state.posts as Post[]).map((post) => {
+        if (comment.postId === post.id) {
+          post.comments = [comment, ...post.comments];
+        }
+        return post;
+      });
     },
   },
   actions: {},
