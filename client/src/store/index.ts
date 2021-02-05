@@ -27,6 +27,7 @@ export default new Vuex.Store({
         return post;
       }));
     },
+    addComment: (state, comment) => {},
   },
   actions: {},
   modules: {},
