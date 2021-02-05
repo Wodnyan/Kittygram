@@ -16,7 +16,7 @@ import { postComment } from "@/lib/api/comments";
 
 export default Vue.extend({
   props: {
-    postId: String,
+    postId: Number,
   },
   data() {
     return {
@@ -32,7 +32,9 @@ export default Vue.extend({
     async onSubmit() {
       if (this.isInputEmpty) return;
       try {
+        console.log(this.postId);
         const post = await postComment(this.comment, Number(this.postId));
+        console.log(post);
         this.comment = "";
       } catch (error) {
         console.log(error.response);

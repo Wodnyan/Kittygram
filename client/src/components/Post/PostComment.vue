@@ -1,6 +1,9 @@
 <template>
   <div class="comment">
-    <span class="font-weight-bold mr-1">{{ commenter }}</span>
+    <v-avatar size="30" color="grey">
+      <v-img :src="commenter.avatar"></v-img>
+    </v-avatar>
+    <span class="font-weight-bold mr-1">{{ commenter.username }}</span>
     <span v-if="commentTooLong && folded">{{ foldedComment }}</span>
     <span v-else>{{ comment }}</span>
     <button
@@ -42,4 +45,4 @@ export default Vue.extend({
 });
 </script>
 
-<style></style>
+<style scoped lang="scss"></style>

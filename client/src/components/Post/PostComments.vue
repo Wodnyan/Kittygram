@@ -5,10 +5,12 @@
       <span>{{ description }}</span>
     </div>
     <div class="comments">
-      <button class="text--disabled">View all 100 comments</button>
+      <button v-if="!full" class="text--disabled">
+        {{ numberOfComments }}
+      </button>
       <post-comment
         :comment="comment.comment"
-        :commenter="comment.username"
+        :commenter="comment.commenter"
         v-for="comment in temp"
         :key="comment.id"
       ></post-comment>
@@ -33,6 +35,12 @@ export default Vue.extend({
   computed: {
     temp() {
       return this.full ? this.comments : this.comments.slice(0, 3);
+    },
+    numberOfComments() {
+      const length = this.comments.length;
+      return this.comments.length === 1
+        ? `View ${this.comments.length} comment`
+        : `View all ${length} comments`;
     },
   },
 });

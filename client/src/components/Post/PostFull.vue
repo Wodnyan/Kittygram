@@ -19,7 +19,7 @@
           />
         </div>
         <post-interact :postId="post.id" :isLiked="post.liked" />
-        <post-comment-form />
+        <post-comment-form :postId="post.id" />
       </v-col>
     </v-row>
   </v-container>
@@ -67,9 +67,9 @@ export default Vue.extend({
   top: 0;
   right: 0;
 }
-@media(max-width: $xl) {
+@media (max-width: $xl) {
   .container .post-image {
-    display: none; 
+    display: none;
   }
 }
 </style>
