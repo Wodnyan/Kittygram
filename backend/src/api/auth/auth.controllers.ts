@@ -4,7 +4,6 @@ import {
   checkUsernameSchema,
   signUpSchema,
 } from "../../validation-schemas/auth";
-import { isEmailUnique } from "./auth.queries";
 import { encryptPassword } from "../../lib/password-encryption";
 import { createAccessToken, createRefreshToken } from "../../lib/jwt";
 import User from "./auth.model";
@@ -23,7 +22,7 @@ export const signUpController = async (
     const validated = await signUpSchema.validateAsync(req.body, {
       abortEarly: false,
     });
-    const uniqueEmail = await isEmailUnique(validated.email);
+    const uniqueEmail = await User.isEmailAvailable(validated.email);
     if (!uniqueEmail) {
       const error = new Error("Email is in use");
       res.status(409);
