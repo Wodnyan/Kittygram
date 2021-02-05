@@ -15,7 +15,7 @@
         :description="post.description"
         :full="false"
       />
-      <post-comment-form />
+      <post-comment-form :postId="post.id" />
     </v-card>
     <v-overlay v-if="showPostOverlay">
       <post-full

@@ -1,8 +1,8 @@
 <template>
-  <v-container class="foo">
+  <v-container class="container">
     <v-icon class="close" size="50px" @click="closeOverlay">mdi-close</v-icon>
     <v-row no-gutters>
-      <v-col sm="12" lg="8">
+      <v-col class="post-image" sm="12" lg="8">
         <post-image :image="post.image" />
       </v-col>
       <v-col class="post-info">
@@ -50,8 +50,9 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-.foo {
-  max-width: 900px;
+@import "../../assets/abstracts/screen-sizes";
+.container {
+  max-width: 1100px;
 }
 .post-info {
   color: black;
@@ -65,5 +66,10 @@ export default Vue.extend({
   position: fixed;
   top: 0;
   right: 0;
+}
+@media(max-width: $xl) {
+  .post-image {
+    display: none !important;
+  }
 }
 </style>
