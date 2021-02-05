@@ -2,7 +2,7 @@
   <v-container class="container">
     <v-icon class="close" size="50px" @click="closeOverlay">mdi-close</v-icon>
     <v-row no-gutters>
-      <v-col class="post-image" sm="12" lg="8">
+      <v-col class="post-image" lg="8">
         <post-image :image="post.image" />
       </v-col>
       <v-col class="post-info">
@@ -68,8 +68,8 @@ export default Vue.extend({
   right: 0;
 }
 @media(max-width: $xl) {
-  .post-image {
-    display: none !important;
+  .container .post-image {
+    display: none; 
   }
 }
 </style>
