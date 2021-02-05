@@ -2,12 +2,13 @@
 import axios from "axios";
 import { API_ENDPOINT } from "@/constants";
 import getCookieValue from "../get-cookie-value";
+import { Post } from "@/types/post";
 
-const POSTS_ENDPOINT = `${API_ENDPOINT}/posts`;
+export const POSTS_ENDPOINT = `${API_ENDPOINT}/posts`;
 
-export const fetchAllPosts = (userId?: number) => {
+export const fetchAllPosts = (userId?: number): Promise<Post> => {
   return axios
-    .get(`${POSTS_ENDPOINT}?userId=${userId}`)
+    .get(`${POSTS_ENDPOINT}?userId=${userId}&showComments=all`)
     .then(({ data }) => data.posts);
 };
 
@@ -26,7 +27,7 @@ export const createPost = (file: any, description: string) => {
     .then(data => data);
 };
 
-export const fetchAllUsersPosts = (userId: number) => {
+export const fetchAllUsersPosts = (userId: number): Promise<Post> => {
   return axios
     .get(`${API_ENDPOINT}/users/${userId}/posts`, {
       withCredentials: true,
